@@ -4,12 +4,12 @@ from streamlit_folium import st_folium
 import pandas as pd
 import time
 import os
-from dotenv import load_dotenv
 
-# Import Agents
+# Import project modules
 from src.agents.extract_agent import ExtractAgent
 from src.agents.verify_agent import VerifyAgent
 from src.agents.memory_agent import MemoryAgent
+from src.config import DEFAULT_MAP_CENTER, DEFAULT_MAP_ZOOM, SIMULATION_SPEED_SECONDS
 
 # --- Configuration ---
 st.set_page_config(
@@ -18,8 +18,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
-load_dotenv()
 
 # --- Custom CSS (Professional Dashboard Theme) ---
 st.markdown("""
@@ -119,8 +117,8 @@ if 'agents_initialized' not in st.session_state:
     st.session_state.logs = []
     st.session_state.processed_count = 0
     st.session_state.verified_count = 0
-    st.session_state.map_center = [34.0522, -118.2437]
-    st.session_state.map_zoom = 11
+    st.session_state.map_center = DEFAULT_MAP_CENTER
+    st.session_state.map_zoom = DEFAULT_MAP_ZOOM
 
 def log(message, level="info"):
     timestamp = time.strftime("%H:%M:%S")
@@ -153,7 +151,7 @@ with st.sidebar:
     
     # Control Panel
     st.subheader("Controls")
-    speed = st.slider("Simulation Speed (s)", 0.1, 2.0, 1.0)
+    speed = st.slider("Simulation Speed (s)", 0.1, 2.0, SIMULATION_SPEED_SECONDS)
     mock_mode = st.toggle("Mock Mode (Save Quota)", value=False)
     run_simulation = st.toggle("Run Simulation", value=False)
 
