@@ -1,8 +1,8 @@
-import pandas as pd
 import numpy as np
 from datetime import datetime
-import os
 import google.generativeai as genai
+from src.config import GOOGLE_API_KEY, GEMINI_MODEL_NAME
+from src.prompts import SEMANTIC_SIMILARITY_PROMPT
 
 class MemoryAgent:
     def __init__(self):
@@ -11,11 +11,10 @@ class MemoryAgent:
         self.incidents = []
         self.next_id = 1
         
-        api_key = os.getenv("GOOGLE_API_KEY")
-        model_name = os.getenv("GEMINI_MODEL_NAME", "gemini-flash-lite-latest")
-        if api_key:
-            genai.configure(api_key=api_key)
-            self.model = genai.GenerativeModel(model_name)
+        if GOOGLE_API_KEY:
+            # Note: genai.configure is often called once, but this ensures it's set if other agents aren't used.
+            genai.configure(api_key=GOOGLE_API_KEY)
+            self.model = genai.GenerativeModel(GEMINI_MODEL_NAME)
         else:
             self.model = None
 
@@ -37,14 +36,7 @@ class MemoryAgent:
             overlap = len(words1.intersection(words2))
             return overlap >= 2 # Arbitrary threshold for mock
 
-        prompt = f"""
-        Do these two disaster reports refer to the same specific event?
-        
-        Report 1: "{text1}"
-        Report 2: "{text2}"
-        
-        Answer ONLY "YES" or "NO".
-        """
+        prompt = SEMANTIC_SIMILARITY_PROMPT.format(text1=text1, text2=text2)
         try:
             response = self.model.generate_content(prompt)
             return "YES" in response.text.strip().upper()

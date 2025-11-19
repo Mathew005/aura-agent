@@ -1,5 +1,5 @@
 import random
-import time
+from src.config import VERIFICATION_THRESHOLD
 
 class VerifyAgent:
     def __init__(self):
@@ -50,5 +50,5 @@ class VerifyAgent:
         return {
             "credibility_score": score,
             "verification_notes": "; ".join(notes),
-            "is_verified": score >= 70
+            "is_verified": score >= VERIFICATION_THRESHOLD
         }

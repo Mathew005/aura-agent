@@ -1,18 +1,14 @@
-import os
 import json
 import google.generativeai as genai
-from dotenv import load_dotenv
 from src.tools.map_tools import get_coordinates
-
-load_dotenv()
+from src.config import GOOGLE_API_KEY, GEMINI_MODEL_NAME, DEFAULT_MAP_CENTER
+from src.prompts import EXTRACT_PROMPT
 
 class ExtractAgent:
     def __init__(self):
-        api_key = os.getenv("GOOGLE_API_KEY")
-        model_name = os.getenv("GEMINI_MODEL_NAME", "gemini-flash-lite-latest")
-        if api_key:
-            genai.configure(api_key=api_key)
-            self.model = genai.GenerativeModel(model_name)
+        if GOOGLE_API_KEY:
+            genai.configure(api_key=GOOGLE_API_KEY)
+            self.model = genai.GenerativeModel(GEMINI_MODEL_NAME)
         else:
             self.model = None
             print("Warning: GOOGLE_API_KEY not found. ExtractAgent will use mock mode.")
@@ -33,21 +29,7 @@ class ExtractAgent:
                 "confidence": 0.85
             }
 
-        prompt = f"""
-        You are an expert disaster response coordinator. 
-        Analyze the following social media post and extract structured data.
-        
-        Post: "{text}"
-        
-        Return ONLY a JSON object with the following keys:
-        - location_text: The specific location mentioned (e.g., "5th and Elm").
-        - incident_type: The type of incident (e.g., "Fire", "Flood", "Earthquake").
-        - severity: "Low", "Medium", "High", or "Critical".
-        - summary: A brief 1-sentence summary of the situation.
-        - confidence: A score from 0.0 to 1.0 indicating how confident you are that this is a real actionable incident.
-        
-        JSON:
-        """
+        prompt = EXTRACT_PROMPT.format(text=text)
         
         try:
             response = self.model.generate_content(prompt)
@@ -65,7 +47,7 @@ class ExtractAgent:
             if coords:
                 data["coordinates"] = coords
             else:
-                data["coordinates"] = [34.0522, -118.2437] # Default fallback
+                data["coordinates"] = DEFAULT_MAP_CENTER # Default fallback
                 
             return data
             
@@ -73,7 +55,7 @@ class ExtractAgent:
             print(f"Extraction error: {e}")
             return {
                 "location_text": "Error",
-                "coordinates": [34.0522, -118.2437],
+                "coordinates": DEFAULT_MAP_CENTER,
                 "incident_type": "Error",
                 "severity": "Low",
                 "summary": "Failed to extract data.",

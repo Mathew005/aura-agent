@@ -1,15 +1,14 @@
-import os
 import google.generativeai as genai
 import time
 import json
+from src.config import GOOGLE_API_KEY, GEMINI_MODEL_NAME
+from src.prompts import SCOUT_PROMPT
 
 class ScoutAgent:
     def __init__(self):
-        api_key = os.getenv("GOOGLE_API_KEY")
-        model_name = os.getenv("GEMINI_MODEL_NAME", "gemini-flash-lite-latest")
-        if api_key:
-            genai.configure(api_key=api_key)
-            self.model = genai.GenerativeModel(model_name)
+        if GOOGLE_API_KEY:
+            genai.configure(api_key=GOOGLE_API_KEY)
+            self.model = genai.GenerativeModel(GEMINI_MODEL_NAME)
         else:
             self.model = None
 
@@ -25,17 +24,7 @@ class ScoutAgent:
                 f"{incident_context} news updates"
             ]
 
-        prompt = f"""
-        You are an intelligent Scout Agent for disaster response.
-        Context: "{incident_context}"
-        
-        Generate 3 specific, high-value search queries to find real-time on-the-ground updates.
-        1. Target Twitter for recent posts (use site:twitter.com).
-        2. Target Reddit: If you know a specific local subreddit (e.g., r/LosAngeles), use "r/LosAngeles". If not, use "site:reddit.com".
-        3. Target local news or official alerts.
-        
-        Return ONLY a raw JSON list of strings. Example: ["site:twitter.com fire", "r/LosAngeles", "site:reddit.com smoke"]
-        """
+        prompt = SCOUT_PROMPT.format(incident_context=incident_context)
         
         try:
             response = self.model.generate_content(prompt)
