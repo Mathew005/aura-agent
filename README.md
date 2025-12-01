@@ -3,6 +3,12 @@
 > **Capstone Project Submission for Google AI Agents Intensive (Nov 2025)**
 > **Track:** Agents for Good
 
+![Python Version](https://img.shields.io/badge/Python-3.12%2B-blue?logo=python&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Prototype-orange)
+![AI Model](https://img.shields.io/badge/AI-Gemini%202.5%20Flash-8E44AD?logo=google-gemini&logoColor=white)
+![Framework](https://img.shields.io/badge/Framework-Google%20ADK-4285F4?logo=google&logoColor=white)
+
 ![AURA Dashboard](image.png) 
 
 ## 🚨 The Problem
