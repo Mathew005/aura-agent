@@ -4,8 +4,8 @@ from urllib.parse import quote
 
 class NewsTool:
     def __init__(self):
-        # Tuned for India as per user request
-        self.base_url = "https://news.google.com/rss/search?q={}&hl=en-IN&gl=IN&ceid=IN:en"
+        # Global search
+        self.base_url = "https://news.google.com/rss/search?q={}&hl=en-US&gl=US&ceid=US:en"
 
     def fetch_news(self, query, limit=3):
         """

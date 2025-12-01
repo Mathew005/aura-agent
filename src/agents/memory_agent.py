@@ -3,6 +3,7 @@ from datetime import datetime
 import google.generativeai as genai
 from src.config import GOOGLE_API_KEY, GEMINI_MODEL_NAME
 from src.prompts import SEMANTIC_SIMILARITY_PROMPT
+from src.utils.rate_limiter import handle_rate_limit
 
 class MemoryAgent:
     def __init__(self):
@@ -34,14 +35,18 @@ class MemoryAgent:
             words1 = set(text1.lower().split())
             words2 = set(text2.lower().split())
             overlap = len(words1.intersection(words2))
-            return overlap >= 2 # Arbitrary threshold for mock
+            # Relaxed threshold: 1 word overlap is enough if same location/type (which is checked before calling this)
+            return overlap >= 1
 
         prompt = SEMANTIC_SIMILARITY_PROMPT.format(text1=text1, text2=text2)
-        try:
-            response = self.model.generate_content(prompt)
-            return "YES" in response.text.strip().upper()
-        except:
-            return False
+        for attempt in range(3):
+            try:
+                response = self.model.generate_content(prompt)
+                return "YES" in response.text.strip().upper()
+            except Exception as e:
+                if handle_rate_limit(e):
+                    continue
+                return False
 
     def consolidate(self, new_report, mock_mode=False):
         """
@@ -68,14 +73,20 @@ class MemoryAgent:
             
             # Semantic Check: If close by, check if it's the same event
             if dist < DISTANCE_THRESHOLD:
-                # Get the summary of the first report in the incident to compare
-                existing_summary = incident["reports"][0].get("summary", "")
-                new_summary = new_report.get("summary", "")
-                
-                if self._check_semantic_similarity(existing_summary, new_summary, mock_mode):
-                    if dist < min_dist:
+                # If distance is extremely small (e.g. same city coordinate), assume same event
+                if dist < 0.001:
+                     if dist < min_dist:
                         min_dist = dist
                         best_match = incident
+                else:
+                    # Get the summary of the first report in the incident to compare
+                    existing_summary = incident["reports"][0].get("summary", "")
+                    new_summary = new_report.get("summary", "")
+                    
+                    if self._check_semantic_similarity(existing_summary, new_summary, mock_mode):
+                        if dist < min_dist:
+                            min_dist = dist
+                            best_match = incident
         
         if best_match:
             # Merge into existing incident
@@ -90,6 +101,25 @@ class MemoryAgent:
             new_sev = severity_levels.get(new_report["severity"], 1)
             if new_sev > current_sev:
                 best_match["severity"] = new_report["severity"]
+            
+            # Merge sources
+            if "sources" not in best_match:
+                best_match["sources"] = []
+            
+            new_sources = new_report.get("sources", [])
+            # Simple deduplication by title/url
+            existing_urls = {s.get("url") for s in best_match["sources"] if s.get("url")}
+            existing_titles = {s.get("title") for s in best_match["sources"] if not s.get("url")}
+            
+            for src in new_sources:
+                if src.get("url"):
+                    if src["url"] not in existing_urls:
+                        best_match["sources"].append(src)
+                        existing_urls.add(src["url"])
+                else:
+                    if src.get("title") and src["title"] not in existing_titles:
+                        best_match["sources"].append(src)
+                        existing_titles.add(src["title"])
                 
             return {
                 "action": "merged",
@@ -105,6 +135,7 @@ class MemoryAgent:
                 "coordinates": new_report["coordinates"],
                 "severity": new_report["severity"],
                 "confidence": new_report["confidence"],
+                "sources": new_report.get("sources", []),
                 "reports": [new_report],
                 "created_at": datetime.now().isoformat(),
                 "last_updated": datetime.now().isoformat()

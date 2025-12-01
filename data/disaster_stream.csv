@@ -1,11 +1,23 @@
 text,timestamp,source
-"OMG the water is rising fast at my mom's house near 5th and Elm! I think the power lines are down too.",2023-10-27 08:00:00,twitter
-"Just saw a huge plume of smoke coming from the downtown bank building. Hope everyone is safe!",2023-10-27 08:05:00,twitter
-"Earthquake just hit! Felt it strong in West LA. Dishes fell off the shelves.",2023-10-27 08:10:00,twitter
-"Can anyone confirm if the 5th and Elm area is flooded? My aunt lives there and isn't answering.",2023-10-27 08:12:00,twitter
-"Fire at the First National Bank downtown! Fire trucks are on the way.",2023-10-27 08:15:00,twitter
-"Fake news! There is no fire downtown. Just a movie set.",2023-10-27 08:16:00,twitter
-"Serious flooding reported at 5th St & Elm St. Avoid the area. Power lines down.",2023-10-27 08:20:00,local_news
-"My dog is missing after the quake. West LA area near Santa Monica Blvd.",2023-10-27 08:25:00,twitter
-"Smoke is getting thicker downtown. I can see flames now from my office window.",2023-10-27 08:30:00,twitter
-"Power outage in West LA. Traffic lights are out.",2023-10-27 08:35:00,twitter
+"OMG just felt a huge shake in Shinjuku! 😱 My coffee spilled everywhere. Train stopped. #earthquake #Tokyo",2023-10-27 08:00:00,twitter
+"OFFICIAL ALERT: Magnitude 6.8 Earthquake detected in Tokyo Prefecture. Residents advised to secure exits and stay calm. JMA.",2023-10-27 08:01:00,official_alert
+"BREAKING: Massive structural fire reported at a high-rise in downtown Chicago. Firefighters on scene.",2023-10-27 08:40:00,news_report
+"I can see flames coming out of the 20th floor! Hope everyone gets out safely. #ChicagoFire",2023-10-27 08:41:00,twitter
+"Anyone else stuck at Shinjuku station? Lights are flickering and elevators are down. #TokyoQuake",2023-10-27 08:02:00,reddit
+"Breaking: Water logging reported in Dadar, Mumbai. Traffic moving slow at T.T. Circle. Avoid low lying areas.",2023-10-27 08:05:00,local_news
+"Mumbai Police: Heavy rains expected to continue. Please stay indoors unless necessary. #MumbaiRains",2023-10-27 08:06:00,official_alert
+"My basement in Dadar is completely flooded! 🌊 Need help moving furniture. This rain is insane.",2023-10-27 08:07:00,twitter
+"Emergency broadcast: Bushfire out of control near Katoomba, Blue Mountains. Residents in Echo Point sector evacuate IMMEDIATELY east via Great Western Hwy.",2023-10-27 08:10:00,official_alert
+"Can see the smoke from Leura. The sky is orange. Stay safe everyone in Katoomba! #nswfires",2023-10-27 08:11:00,twitter
+"Fire crews are battling strong winds in the Blue Mountains. Visibility is near zero on the highway.",2023-10-27 08:12:00,news_report
+"SENSOR_NET: High water levels detected at Ocean Drive sensor 4B. Value: 1.2m above normal. Potential storm surge.",2023-10-27 08:15:00,sensor_network
+"Hurricane Warning: Miami Beach residents should complete preparations. Tropical storm force winds expected within 2 hours.",2023-10-27 08:16:00,official_alert
+"Partying on Ocean Drive before the storm hits! 🍹 Just kidding, boarding up windows now. Stay safe Miami!",2023-10-27 08:17:00,twitter
+"Live cam shows lava fountains visible from Grindavik. Blue Lagoon is being evacuated as a precaution.",2023-10-27 08:20:00,news_report
+"Iceland Met Office: Eruption fissure has opened north of Grindavik. Lava flowing south. Code Red for aviation.",2023-10-27 08:21:00,official_alert
+"Just landed at Keflavik and pilot says we might be stuck here. Can see the glow from the volcano! 🌋 #Iceland",2023-10-27 08:22:00,twitter
+"Aid convoy unable to reach Lodwar due to road conditions. Drought situation critical in Turkana.",2023-10-27 08:25:00,humanitarian_report
+"We need water in Turkana! Wells are dry. Livestock is dying. Please send help. #KenyaDrought",2023-10-27 08:26:00,twitter
+"Flash Report: Landslide has blocked the railway line to Machu Picchu near Cusco. Tourists stranded.",2023-10-27 08:30:00,local_news
+"Stuck on the train to Machu Picchu. Rocks covering the tracks. Everyone is safe but we are not moving. #Peru",2023-10-27 08:31:00,twitter
+"Tsunami sirens sounding in Valparaiso! Everyone heading to the hills. This is not a drill.",2023-10-27 08:35:00,twitter

@@ -8,13 +8,12 @@ class RealIncidentFeed:
         self.last_fetch = 0
         self.fetch_interval = 300  # Fetch every 5 minutes
         self.queries = [
-            "India disaster news breaking",
-            "Mumbai fire update",
-            "Delhi earthquake news",
-            "Kerala flood warning",
-            "Bangalore accident news",
-            "cyclone warning India",
-            "landslide Himachal Pradesh"
+            "breaking disaster news",
+            "earthquake alert",
+            "wildfire evacuation",
+            "flood warning",
+            "tsunami alert",
+            "hurricane tracker"
         ]
         self.current_index = 0
 

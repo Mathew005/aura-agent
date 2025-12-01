@@ -1,6 +1,6 @@
 # Core frameworks
 google-adk
-streamlit
+streamlit>=1.30.0
 
 # Google & Gemini APIs
 google-generativeai

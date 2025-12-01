@@ -100,8 +100,19 @@ ipython_config.py
 dmypy.json
 
 # Streamlit
-.streamlit/secrets.toml
+.streamlit/
 
 # OS specific files
 .DS_Store
 Thumbs.db
+
+# Logs
+output.txt
+
+# Temporary
+test_*.py
+check_*.py
+inspect_*.py
+
+# Course Materials
+principles/
