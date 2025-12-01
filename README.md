@@ -11,6 +11,8 @@
 
 ![AURA Dashboard](image.png) 
 
+[![Watch the Showcase](https://img.shields.io/badge/Watch-Showcase_Video-red?style=for-the-badge&logo=youtube)](https://youtu.be/LRcSJLLaq8k) 
+
 ## 🚨 The Problem
 During natural disasters and emergencies, social media is flooded with information—some critical, some irrelevant, and some false. Emergency responders and humanitarian organizations struggle to filter this "noise" to find actionable intelligence in real-time. Manual verification is too slow when seconds count.
 
