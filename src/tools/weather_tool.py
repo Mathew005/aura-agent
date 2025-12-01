@@ -5,7 +5,7 @@ from src.config import OPEN_WEATHER_API
 class WeatherTool:
     def __init__(self):
         self.api_key = OPEN_WEATHER_API
-        self.base_url = "https://api.openweathermap.org/data/3.0/onecall"
+        self.base_url = "https://api.openweathermap.org/data/2.5/weather"
 
     def fetch_weather(self, lat, lon):
         """
@@ -16,23 +16,22 @@ class WeatherTool:
             return None
 
         try:
-            url = f"{self.base_url}?lat={lat}&lon={lon}&exclude=minutely,hourly,daily&appid={self.api_key}&units=metric"
+            url = f"{self.base_url}?lat={lat}&lon={lon}&appid={self.api_key}&units=metric"
             response = requests.get(url)
             response.raise_for_status()
             data = response.json()
             
-            # Extract relevant current weather info
-            current = data.get("current", {})
-            weather_desc = current.get("weather", [{}])[0].get("description", "Unknown")
-            temp = current.get("temp", "Unknown")
-            humidity = current.get("humidity", "Unknown")
-            wind_speed = current.get("wind_speed", "Unknown")
+            # Extract relevant current weather info (v2.5 structure)
+            weather_desc = data.get("weather", [{}])[0].get("description", "Unknown")
+            main = data.get("main", {})
+            temp = main.get("temp", "Unknown")
+            humidity = main.get("humidity", "Unknown")
+            wind = data.get("wind", {})
+            wind_speed = wind.get("speed", "Unknown")
             
-            # Check for alerts
-            alerts = data.get("alerts", [])
-            alert_summary = []
-            for alert in alerts:
-                alert_summary.append(f"{alert.get('event', 'Alert')}: {alert.get('description', '')[:100]}...")
+            # v2.5 weather endpoint doesn't usually provide alerts in the same way as OneCall
+            # We'll omit alerts for now or check if they exist in a different key if applicable
+            alert_summary = [] 
 
             return {
                 "description": weather_desc,

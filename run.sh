@@ -31,21 +31,21 @@ if [ ! -d "$VENV_DIR" ]; then
     fi
     echo -e "${GREEN}Virtual environment created.${NC}"
     
-    # Activate and Install Dependencies
-    source $VENV_DIR/bin/activate
-    echo -e "${YELLOW}Installing dependencies...${NC}"
-    pip install --upgrade pip
-    if [ -f "$REQUIREMENTS_FILE" ]; then
-        pip install -r $REQUIREMENTS_FILE
-    else
-        echo -e "${RED}Warning: $REQUIREMENTS_FILE not found.${NC}"
-    fi
+    echo -e "${GREEN}Virtual environment created.${NC}"
+fi
+
+# Activate and Install Dependencies (Always)
+source $VENV_DIR/bin/activate
+echo -e "${YELLOW}Installing dependencies...${NC}"
+pip install --upgrade pip
+if [ -f "$REQUIREMENTS_FILE" ]; then
+    pip install -r $REQUIREMENTS_FILE
 else
-    echo -e "${GREEN}Virtual environment found.${NC}"
-    source $VENV_DIR/bin/activate
+    echo -e "${RED}Warning: $REQUIREMENTS_FILE not found.${NC}"
 fi
 
 # 5. Run Application
 echo -e "${GREEN}Starting Application...${NC}"
+echo -e "${GREEN}Dashboard available at: http://localhost:8000${NC}"
 echo -e "${YELLOW}Press Ctrl+C to stop.${NC}"
 python $APP_SCRIPT

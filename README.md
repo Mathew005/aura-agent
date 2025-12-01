@@ -23,29 +23,6 @@ During natural disasters and emergencies, social media is flooded with informati
 
 AURA is built using the **Google AI Agent Development Kit (ADK)** and **Gemini 2.5 Flash**.
 
-```mermaid
-graph TD
-    Input[Raw Data Stream] --> Server[FastAPI Server]
-    
-    subgraph "Agentic Core"
-        Server --> Extract[Extract Agent]
-        Extract -->|Structured Incident| Scout[Scout Agent]
-        
-        subgraph "Verification Loop"
-            Scout -->|Search Queries| Google[Google Search / Weather API]
-            Google -->|Live Updates| Verify[Verify Agent]
-            Verify -->|Credibility Score| Decision{Verified?}
-        end
-        
-        Decision -->|Yes| Memory[Memory Agent]
-        Decision -->|No| Discard[Discard]
-    end
-    
-    Memory -->|Consolidated State| API[/incidents Endpoint]
-    API -->|JSON| Client[Web Client (HTML/JS)]
-    Client -->|Render| Map[Leaflet Map]
-```
-
 ### The Agents
 1.  **Extract Agent**: Uses `gemini-2.5-flash` to parse unstructured text (tweets, news) into structured JSON (Location, Type, Severity).
 2.  **Scout Agent**: Generates targeted search queries (e.g., "site:twitter.com wildfire latest") to find corroborating evidence.
@@ -90,11 +67,18 @@ graph TD
     ```
 
 3.  **Run the Application**
-    We provide a helper script to set up the virtual environment and start the app:
+    Helper scripts are provided to set up the virtual environment and start the app.
+
+    **For Linux/macOS:**
     ```bash
     ./run.sh
     ```
-    This script handles virtual environment creation, dependency installation, and server startup.
+
+    **For Windows:**
+    ```cmd
+    run.bat
+    ```
+    These scripts handle virtual environment creation, dependency installation, and server startup.
 
 ## 🎮 Usage
 1.  Open the dashboard at `http://localhost:8000`.

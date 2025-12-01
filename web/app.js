@@ -9,8 +9,9 @@ let state = {
     isRunning: false,
     intervalId: null,
     incidentCount: 0,
-    simulationSpeed: 1500,
-    markers: {}
+    simulationSpeed: 5000,
+    markers: {},
+    isProcessing: false
 };
 
 // --- 2. UI CONTROLLER ---
@@ -42,7 +43,7 @@ function setupListeners() {
 
     // Speed Slider
     document.getElementById('speed-slider').addEventListener('input', (e) => {
-        state.simulationSpeed = 3500 - e.target.value; // Invert logic: higher slider = lower ms
+        state.simulationSpeed = 6500 - e.target.value; // Invert logic: higher slider = lower ms
         if (state.isRunning) {
             stopSimulation();
             startSimulation();
@@ -64,18 +65,20 @@ function startSimulation() {
     state.isRunning = true;
     logConsole('info', 'Simulation sequence initiated.');
 
-    state.intervalId = setInterval(() => {
-        runSimulationStep();
-    }, state.simulationSpeed);
+    // Initial call
+    runSimulationStep();
 }
 
 function stopSimulation() {
     state.isRunning = false;
-    clearInterval(state.intervalId);
+    if (state.intervalId) clearTimeout(state.intervalId); // Clear any pending timeout
     logConsole('warn', 'Simulation paused by user.');
 }
 
 async function runSimulationStep() {
+    if (!state.isRunning || state.isProcessing) return;
+
+    state.isProcessing = true;
     const mockMode = document.getElementById('mock-mode').checked;
 
     try {
@@ -112,11 +115,20 @@ async function runSimulationStep() {
             stopSimulation();
             document.getElementById('sim-toggle').checked = false;
             alert('Simulation Complete');
+            state.isProcessing = false;
+            return; // Stop loop
         }
 
     } catch (error) {
         console.error(error);
         logConsole('error', `API Error: ${error.message}`);
+    } finally {
+        state.isProcessing = false;
+
+        // Schedule next step only if still running
+        if (state.isRunning) {
+            state.intervalId = setTimeout(runSimulationStep, state.simulationSpeed);
+        }
     }
 }
 

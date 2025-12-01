@@ -1,15 +1,13 @@
 # Core frameworks
 google-adk
-streamlit>=1.30.0
+fastapi
+uvicorn
 
 # Google & Gemini APIs
 google-generativeai
 google-cloud-aiplatform
-
 # Data & Map
 pandas
-folium
-streamlit-folium
 
 # Utilities
 python-dotenv
