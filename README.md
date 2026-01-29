@@ -9,7 +9,7 @@
 ![AI Model](https://img.shields.io/badge/AI-Gemini%202.5%20Flash-8E44AD?logo=google-gemini&logoColor=white)
 ![Framework](https://img.shields.io/badge/Framework-Google%20ADK-4285F4?logo=google&logoColor=white)
 
-![AURA Dashboard](image.png) 
+<img width="1845" height="926" alt="image (1)" src="https://github.com/user-attachments/assets/0c891176-7808-441f-86ce-6e340be9adc8" />
 
 [![Watch the Showcase](https://img.shields.io/badge/Watch-Showcase_Video-red?style=for-the-badge&logo=youtube)](https://youtu.be/LRcSJLLaq8k) 
 
