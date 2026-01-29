@@ -27,7 +27,7 @@ During natural disasters and emergencies, social media is flooded with informati
 
 ## 🏗️ Architecture
 
-![AURA Architecture Flow](flow.png)
+<img width="5240" height="521" alt="flow" src="https://github.com/user-attachments/assets/57b235e4-8893-4d1b-82fd-80a26a58f158" />
 
 AURA is built using the **Google AI Agent Development Kit (ADK)** and **Gemini 2.5 Flash**.
 
